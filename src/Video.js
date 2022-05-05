@@ -1,0 +1,46 @@
+import React,  {useRef, useState} from 'react'
+import './Video.css'
+import VideoFooter from './VideoFooter';
+import VideoSidebar from './VideoSidebar';
+
+function Video({
+  url,
+  channel,
+  description,
+  song,
+  likes,
+  messages,
+  shares
+}) {
+  const [lancer, setLancer] = useState(false)
+  const videoRef = useRef(null);
+
+  const onVideoPress = () => {
+    if (lancer) {
+      videoRef.current.pause();
+      setLancer(false);
+    } else {
+      videoRef.current.play();
+      setLancer(true)
+    }
+  }
+
+  return (
+    <div className="video">
+      <video 
+        className="video_player"
+        loop
+        onClick={onVideoPress}
+        ref={videoRef}
+        src={url}>
+      </video>
+      <VideoFooter 
+      channel={channel}
+      description={description} 
+      song={song}/> 
+      <VideoSidebar likes={likes} messages={messages} shares={shares} />
+    </div>
+  )
+}
+
+export default Video
